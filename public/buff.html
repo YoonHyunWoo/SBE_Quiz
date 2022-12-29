@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es-MX" >
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://sbe-ox.s3.ap-northeast-2.amazonaws.com/Favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<style>
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+
+
+.start-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: orange;
+  z-index: 100;
+  text-transform: uppercase;
+  color: white;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-flow: column;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-transition: 0.2s ease-in;
+  transition: 0.2s ease-in;
+}
+
+#logo{
+  width: 20%;
+  color: black;
+}
+
+.logo-box > p{
+  width: 20%;
+  color: black;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.logo-box{
+    position: absolute;
+    top:40px;
+    left: 40px;
+}
+
+.icon{
+  width: 20%;
+
+  
+}
+
+.start-screen__btn {
+  border: none;
+  cursor: pointer;
+  width: 200px;
+  padding: 1em 0;
+  text-align: center;
+  color: white;
+  background: #f5f6fa;
+  text-transform: uppercase;
+  border-radius: 40px;
+  -webkit-transition: 0.2s ease-in;
+  transition: 0.2s ease-in;
+  outline: none;
+  color: #2f3640;
+  -webkit-transition: 0.5s ease-in;
+  transition: 0.5s ease-in;
+}
+.start-screen__btn:hover {
+  background: #dcdde1;
+}
+.start-screen--started {
+  top: -100vh;
+}
+
+.end-screen {
+  position: absolute;
+  text-align: center;
+  top: 100vh;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 100;
+  text-transform: uppercase;
+  color: white;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-flow: column;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-transition: 0.2s ease-in;
+  transition: 0.2s ease-in;
+}
+.end-screen__btn {
+  border: none;
+  cursor: pointer;
+  width: 200px;
+  padding: 1em 0;
+  text-align: center;
+  color: white;
+  background: #f5f6fa;
+  text-transform: uppercase;
+  border-radius: 40px;
+  -webkit-transition: 0.2s ease-in;
+  transition: 0.2s ease-in;
+  outline: none;
+  color: #2f3640;
+  -webkit-transition: 0.5s ease-in;
+  transition: 0.5s ease-in;
+}
+.end-screen__btn:hover {
+  background: #dcdde1;
+}
+.end-screen--show {
+  top: 0;
+}
+.end-screen--loser {
+  background: orange
+}
+
+.quiz-app {
+  background: #f5f6fa;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-flow: column;
+  -webkit-box-align: center;
+          align-items: center;
+  justify-content: space-around;
+  font-family: "Questrial", sans-serif;
+  color: #2f3640;
+}
+
+@media screen and (min-width: 640px) {
+  body {
+    font-size: 24px;
+  }
+}
+.progress {
+  width: 80%;
+  max-width: 768px;
+  margin: 0 auto;
+}
+.progress__bar {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  width: 100%;
+  height: 0.825em;
+  background: #dcdde1;
+  border-radius: 40px;
+  overflow: hidden;
+}
+.progress__bar[value]::-webkit-progress-bar {
+  background-color: #dcdde1;
+  border-radius: 2px;
+}
+.progress__bar[value]::-webkit-progress-value {
+  background: green;
+  -webkit-transition: 0.2s ease-in;
+  transition: 0.2s ease-in;
+}
+
+.quiz {
+  width: 80%;
+  max-width: 768px;
+  margin: 0 auto;
+}
+.quiz__question {
+  text-align: center;
+}
+.quiz__answers {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 0.825em;
+}
+.quiz__answer {
+  border: none;
+  cursor: pointer;
+  padding: 1em 0;
+  text-align: center;
+  color: white;
+  background: orange;
+  text-transform: uppercase;
+  border-radius: 40px;
+  -webkit-transition: 0.2s ease-in;
+  transition: 0.2s ease-in;
+  outline: none;
+}
+/* .quiz__answer:hover {
+  background: darkgoldenrod;
+} */
+
+.clicked {
+  background: darkgoldenrod;
+}
+
+.quiz__answer--correct {
+  background: #4cd137;
+}
+.quiz__answer--correct:hover {
+  background: #4cd137;
+}
+.quiz__answer--incorrect {
+  background: #e84118;
+}
+.quiz__answer--incorrect:hover {
+  background: #e84118;
+}
+
+.actions {
+  width: 80%;
+  max-width: 768px;
+  margin: 0 auto;
+  text-align: center;
+}
+.actions__btn {
+  width: 200px;
+  border: none;
+  cursor: pointer;
+  padding: 1em 0;
+  text-align: center;
+  color: white;
+  background: green;
+  outline: none;
+  border-radius: 40px;
+  -webkit-transition: 0.2s ease-in;
+  transition: 0.2s ease-in;
+}
+.actions__btn:hover {
+  background: darkgreen;
+}
+.actions__btn[disabled] {
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+  cursor: not-allowed;
+}
+.actions__btn[disabled]:hover {
+  background: #8c7ae6;
+}
+
+@media screen and (min-width: 768px) {
+  .quiz__answers {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.player {
+  background: #2f3640;
+  padding: 0 1em;
+  border-radius: 40px;
+  color: white;
+}
+</style>
+
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="app"></div>
+<!-- partial -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/react/16.13.1/umd/react.production.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.13.1/umd/react-dom.production.min.js'></script>
+<script  src="./script.js"></script>
+<script> 
+function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}const StartScreen = props => {
+  let classes = ["start-screen"];
+
+  if (props.started) {
+    classes.push("start-screen--started");
+  }
+  return (
+    React.createElement("div", { class: classes.join(" ") },
+    React.createElement("h1", null, "Ryan's Quiz Show!!!"),
+    React.createElement("button", { onClick: props.startGame, class: "start-screen__btn" }, "Start")));
+
+
+
+
+};
+
+const EndScreen = props => {
+  const score = props.score / props.total * 100;
+
+  let classes = ["end-screen"];
+  let message = "";
+
+  if (props.show) {
+    classes.push("end-screen--show");
+  }
+
+  if (score >= 60) {
+    classes.push("end-screen--winner");
+    message = "You're so smart!";
+  } else {
+    classes.push("end-screen--loser");
+    message = "You might need to study!";
+  }
+
+  return (
+    React.createElement("div", { class: classes.join(" ") },
+    React.createElement("h1", null, "You scored ",
+    score, "% - ", message)));
+
+
+
+};
+
+const ProgressBar = props => {
+  return (
+    React.createElement("div", { class: "progress" },
+    React.createElement("progress", {
+      class: "progress__bar",
+      max: props.total,
+      value: props.position })));
+
+
+
+};
+
+const PlayerScore = props => {
+  return (
+    React.createElement("div", { class: "player" },
+    React.createElement("h3", null, "Your Score: ",
+    props.score, "/", props.total)));
+
+
+
+};
+
+const QuizActions = props => {
+  if (props.position >= props.total) {
+    return (
+      React.createElement("div", { class: "actions" },
+      React.createElement("button", {
+        class: "actions__btn",
+        onClick: props.finish,
+        disabled: props.actionDisabled }, "Finish Quiz!")));
+
+
+
+
+
+  } else {
+    return (
+      React.createElement("div", { class: "actions" },
+      React.createElement("button", {
+        class: "actions__btn",
+        onClick: props.action,
+        disabled: props.actionDisabled }, "Next Question!")));
+
+
+
+
+
+  }
+};
+
+const Question = props => {
+  return (
+    React.createElement("div", { class: "quiz" },
+    React.createElement("div", { class: "quiz__question" },
+    React.createElement("h1", null, props.current.question)),
+
+    React.createElement("div", { class: "quiz__answers" },
+    props.current.answers.map((a, index) =>
+    React.createElement("button", {
+      onClick: event => {
+        props.answerAction(a);
+      },
+      class: props.answerClasses.join(" "),
+      key: index,
+      disabled: props.answered ? true : false },
+
+    a.label)))));
+
+
+
+
+
+};
+
+class App extends React.Component {constructor(...args) {super(...args);_defineProperty(this, "state",
+    {
+      quiz: [
+      {
+        id: "1j3hkldj",
+        question: "How many notes are there in a musical scale?",
+        answers: [
+        { label: "7", correct: true },
+        { label: "8", correct: false },
+        { label: "9", correct: false },
+        { label: "10", correct: false }] },
+
+
+      {
+        id: "aksldn834",
+        question: "What temperature centigrade does water boil at?",
+        answers: [
+        { label: "212", correct: false },
+        { label: "160", correct: false },
+        { label: "100", correct: true },
+        { label: "425", correct: false }] },
+
+
+    ],
+
+
+
+      currentQuestion: {
+        id: "1j3hkldj",
+        question: "How many notes are there in a musical scale?",
+        answers: [
+        { label: "7", correct: true },
+        { label: "8", correct: false },
+        { label: "9", correct: false },
+        { label: "10", correct: false }] },
+
+
+      currentQuestionIndex: 0,
+      currentPosition: 1,
+      userpoints: 0,
+      actionDisabled: true,
+      answeredStatus: false,
+      answerClasses: ["quiz__answer"],
+      gameStarted: false,
+      showEndScreen: false });_defineProperty(this, "startGame",
+
+
+    () => {
+      let started = this.state.gameStarted;
+      started = true;
+
+      this.setState({
+        gameStarted: started });
+
+    });_defineProperty(this, "increaseCurrentPosition",
+
+    () => {
+      let pos = this.state.currentPosition;
+      if (pos > this.state.quiz.length) {
+        return;
+      }
+      pos++;
+      this.setState({
+        currentPosition: pos });
+
+    });_defineProperty(this, "increasePlayerScore",
+
+    () => {
+      let score = this.state.userpoints;
+      score++;
+      if (score > this.state.quiz.length) {
+        return;
+      }
+      this.setState({
+        userpoints: score });
+
+    });_defineProperty(this, "toggleActionButton",
+
+    () => {
+      let status = this.state.actionDisabled;
+
+      status = !status;
+
+      this.setState({
+        actionDisabled: status });
+
+    });_defineProperty(this, "renderNextQuestion",
+
+    () => {
+      let answered = false;
+      this.setState({
+        answeredStatus: answered });
+
+
+      let currentI = this.state.currentQuestionIndex;
+
+      if (currentI > this.state.quiz.length) {
+        currentI = this.state.currentQuestionIndex;
+        return;
+      }
+
+      this.increaseCurrentPosition();
+      currentI++;
+
+      let currentQ = this.state.quiz[currentI];
+
+      this.setState({
+        currentQuestionIndex: currentI,
+        currentQuestion: currentQ });
+
+
+      this.toggleActionButton();
+    });_defineProperty(this, "checkAnswer",
+
+    answer => {
+      let answered = true;
+      this.setState({
+        answeredStatus: answered });
+
+
+      if (answer.correct) {
+        this.increasePlayerScore();
+      }
+      this.toggleActionButton();
+    });_defineProperty(this, "toggleEndScreen",
+
+    () => {
+      let status = this.state.showEndScreen;
+      status = !status;
+
+      this.setState({
+        showEndScreen: status });
+
+    });}
+
+  render() {
+    return (
+      React.createElement("div", { class: "quiz-app" },
+      React.createElement(StartScreen, {
+        started: this.state.gameStarted,
+        startGame: this.startGame }),
+
+      React.createElement(ProgressBar, {
+        position: this.state.currentPosition,
+        total: this.state.quiz.length }),
+
+
+      React.createElement(Question, {
+        current: this.state.currentQuestion,
+        answerAction: this.checkAnswer,
+        answered: this.state.answeredStatus,
+        answerClasses: this.state.answerClasses }),
+
+
+      React.createElement(QuizActions, {
+        position: this.state.currentPosition,
+        total: this.state.quiz.length,
+        action: this.renderNextQuestion,
+        actionDisabled: this.state.actionDisabled,
+        finish: this.toggleEndScreen }),
+
+
+      React.createElement(PlayerScore, {
+        score: this.state.userpoints,
+        total: this.state.quiz.length }),
+
+
+      React.createElement(EndScreen, {
+        show: this.state.showEndScreen,
+        score: this.state.userpoints,
+        total: this.state.quiz.length })));
+
+
+
+  }}
+
+
+ReactDOM.render(React.createElement(App, null), document.getElementById("app"));
+
+
+</script>
+</body>
+</html>
